@@ -17,11 +17,24 @@ public class InvoiceHeader {
      private Date invoiceDate;
      private String customerName;
      private ArrayList<InvoiceLine> lines;
+     
 
     public InvoiceHeader(int invoiceNum, Date invoiceDate, String customerName) {
         this.invoiceNum = invoiceNum;
         this.invoiceDate = invoiceDate;
         this.customerName = customerName;
+    }
+    
+    public double getInvoiceTotal(){
+        double total = 0.0;
+        
+        //for each line in invoice add its total to invoice total price
+        for (int i = 0; i < lines.size() ; i++) {
+            InvoiceLine line = lines.get(i);
+            total+= line.itemTotal();
+        }
+        
+        return total;
     }
 
     public int getInvoiceNum() {
@@ -46,6 +59,11 @@ public class InvoiceHeader {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceHeader{" + "invoiceNum=" + invoiceNum + ", invoiceDate=" + invoiceDate + ", customerName=" + customerName + '}';
     }
      
      
