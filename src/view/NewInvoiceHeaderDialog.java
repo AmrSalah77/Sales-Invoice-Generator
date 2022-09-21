@@ -5,6 +5,11 @@
  */
 package view;
 
+import controller.Controller;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Amr
@@ -17,6 +22,11 @@ public class NewInvoiceHeaderDialog extends javax.swing.JDialog {
     public NewInvoiceHeaderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Controller controller = new Controller();
+        nameDateCancel.setActionCommand("Cancel Header");
+        nameDateCancel.addActionListener(controller);
+        nameDateSave.setActionCommand("Save Header");
+        nameDateSave.addActionListener(controller);
     }
 
     /**
@@ -28,48 +38,86 @@ public class NewInvoiceHeaderDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        CustomerNameLabel = new javax.swing.JLabel();
+        CustomerNameVal = new javax.swing.JTextField();
+        DateLabel = new javax.swing.JLabel();
+        DateVal = new javax.swing.JTextField();
+        nameDateSave = new javax.swing.JButton();
+        nameDateCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Create New Invoice");
+        setLocation(new java.awt.Point(800, 450));
 
-        jLabel1.setText("CustomerName");
+        CustomerNameLabel.setText("Customer Name");
 
-        jLabel2.setText("Date");
+        CustomerNameVal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CustomerNameValActionPerformed(evt);
+            }
+        });
+
+        DateLabel.setText("Date");
+
+        nameDateSave.setText("OK");
+        nameDateSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameDateSaveActionPerformed(evt);
+            }
+        });
+
+        nameDateCancel.setText("Cacnel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CustomerNameLabel)
+                            .addComponent(DateLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CustomerNameVal)
+                            .addComponent(DateVal, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(nameDateSave, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(nameDateCancel)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CustomerNameLabel)
+                    .addComponent(CustomerNameVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(DateLabel)
+                    .addComponent(DateVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameDateSave)
+                    .addComponent(nameDateCancel))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void nameDateSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameDateSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameDateSaveActionPerformed
+
+    private void CustomerNameValActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerNameValActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CustomerNameValActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,10 +162,37 @@ public class NewInvoiceHeaderDialog extends javax.swing.JDialog {
         });
     }
 
+    public JLabel getCustomerNameLabel() {
+        return CustomerNameLabel;
+    }
+
+    public JTextField getCustomerNameVal() {
+        return CustomerNameVal;
+    }
+
+    public JLabel getDateLabel() {
+        return DateLabel;
+    }
+
+    public JTextField getDateVal() {
+        return DateVal;
+    }
+
+    public JButton getNameDateCancel() {
+        return nameDateCancel;
+    }
+
+    public JButton getNameDateSave() {
+        return nameDateSave;
+    }
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel CustomerNameLabel;
+    private javax.swing.JTextField CustomerNameVal;
+    private javax.swing.JLabel DateLabel;
+    private javax.swing.JTextField DateVal;
+    private javax.swing.JButton nameDateCancel;
+    private javax.swing.JButton nameDateSave;
     // End of variables declaration//GEN-END:variables
 }

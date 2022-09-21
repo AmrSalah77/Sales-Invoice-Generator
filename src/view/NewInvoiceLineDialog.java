@@ -28,21 +28,91 @@ public class NewInvoiceLineDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ItemNameLabel = new javax.swing.JLabel();
+        ItemNameVal = new javax.swing.JTextField();
+        ItemPriceLabel = new javax.swing.JLabel();
+        ItemPriceVal = new javax.swing.JTextField();
+        ItemCountLabel = new javax.swing.JLabel();
+        ItemCountVal = new javax.swing.JTextField();
+        itemLinesSave = new javax.swing.JButton();
+        itemLinesCancel = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Create New Invoice");
+        setLocation(new java.awt.Point(800, 450));
+
+        ItemNameLabel.setText("Item Name");
+
+        ItemPriceLabel.setText("Item Price");
+
+        ItemCountLabel.setText("Item Count");
+
+        itemLinesSave.setText("OK");
+        itemLinesSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemLinesSaveActionPerformed(evt);
+            }
+        });
+
+        itemLinesCancel.setText("Cacnel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ItemPriceLabel)
+                                    .addComponent(ItemCountLabel)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(ItemNameLabel)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ItemCountVal, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(ItemNameVal)
+                                .addComponent(ItemPriceVal, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(itemLinesSave, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(itemLinesCancel)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ItemNameLabel)
+                    .addComponent(ItemNameVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ItemPriceLabel)
+                    .addComponent(ItemPriceVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ItemCountLabel)
+                    .addComponent(ItemCountVal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(itemLinesSave)
+                    .addComponent(itemLinesCancel))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void itemLinesSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLinesSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemLinesSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -87,5 +157,13 @@ public class NewInvoiceLineDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ItemCountLabel;
+    private javax.swing.JTextField ItemCountVal;
+    private javax.swing.JLabel ItemNameLabel;
+    private javax.swing.JTextField ItemNameVal;
+    private javax.swing.JLabel ItemPriceLabel;
+    private javax.swing.JTextField ItemPriceVal;
+    private javax.swing.JButton itemLinesCancel;
+    private javax.swing.JButton itemLinesSave;
     // End of variables declaration//GEN-END:variables
 }

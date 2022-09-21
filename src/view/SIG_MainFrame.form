@@ -32,6 +32,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
+      <Point value="[500, 200]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="MenuBar"/>
@@ -61,23 +64,19 @@
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="invoiceDateLabel" min="-2" max="-2" attributes="0"/>
-                                          <Component id="invoiceNumlLabel" min="-2" max="-2" attributes="0"/>
-                                          <Component id="customerNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Component id="InvoiceTotalLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="InvoiceTotalLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="invoiceDateLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="invoiceNumlLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="customerNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="invoiceNumlLabelVal" min="-2" max="-2" attributes="0"/>
                                   <Component id="InvoiceTotalLabelVal" min="-2" max="-2" attributes="0"/>
-                                  <Component id="invoiceDateLabelVal" alignment="0" pref="183" max="32767" attributes="0"/>
-                                  <Component id="customerNameLabelVal" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="DateLabelVal" min="-2" max="-2" attributes="0"/>
+                                  <Component id="CustomerNameLabelVal" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jScrollPane2" min="-2" pref="423" max="-2" attributes="0"/>
@@ -89,9 +88,9 @@
                       <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       <Component id="deleteInvoiceButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
-                      <Component id="saveButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
-                      <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="newLineButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                      <Component id="deleteLineButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="72" max="32767" attributes="0"/>
@@ -112,12 +111,12 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="invoiceDateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="invoiceDateLabelVal" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="DateLabelVal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="customerNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="customerNameLabelVal" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CustomerNameLabelVal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -135,8 +134,8 @@
                       <Component id="deleteInvoiceButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="deleteLineButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="newLineButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -161,15 +160,21 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteInvoiceButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="saveButton">
+    <Component class="javax.swing.JButton" name="newLineButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Save"/>
+        <Property name="text" type="java.lang.String" value="New Item"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newLineButtonActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="cancelButton">
+    <Component class="javax.swing.JButton" name="deleteLineButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Delete"/>
+        <Property name="text" type="java.lang.String" value="Delete Item"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteLineButtonActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -188,7 +193,11 @@
                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
               </Table>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="SIG_MainFrame_invoicesTable"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -207,20 +216,10 @@
         <Property name="text" type="java.lang.String" value="Invoice Date"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="invoiceDateLabelVal">
-      <Properties>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="invoiceDateLabelValActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="customerNameLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Customer Name"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="customerNameLabelVal">
     </Component>
     <Component class="javax.swing.JLabel" name="InvoiceTotalLabel">
       <Properties>
@@ -228,6 +227,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="InvoiceTotalLabelVal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="-"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="DateLabelVal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="-"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="CustomerNameLabelVal">
       <Properties>
         <Property name="text" type="java.lang.String" value="-"/>
       </Properties>
@@ -242,11 +251,12 @@
         <Component class="javax.swing.JTable" name="invoiceItemsTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
+              <Table columnCount="5" rowCount="4">
                 <Column editable="true" title="Title 1" type="java.lang.Object"/>
                 <Column editable="true" title="Title 2" type="java.lang.Object"/>
                 <Column editable="true" title="Title 3" type="java.lang.Object"/>
                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                <Column editable="true" title="Title 5" type="java.lang.Object"/>
               </Table>
             </Property>
           </Properties>
