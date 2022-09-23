@@ -6,6 +6,9 @@
 package view;
 
 import controller.Controller;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -14,6 +17,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import model.InvoiceHeader;
+import model.InvoiceHeaderTableModel;
 
 /**
  *
@@ -26,19 +31,18 @@ public class SIG_MainFrame extends javax.swing.JFrame {
      */
     public SIG_MainFrame() {
         initComponents();
-        Controller controller = new Controller();
-        deleteLineButton.setActionCommand("Cancel");
+        deleteLineButton.setActionCommand("Delete Item");
         deleteLineButton.addActionListener(controller);
-        newLineButton.setActionCommand("Save");
+        newLineButton.setActionCommand("New item");
         newLineButton.addActionListener(controller);
-        createNewInvoiceButton.setActionCommand("Create");
+        createNewInvoiceButton.setActionCommand("Create Invoice");
         createNewInvoiceButton.addActionListener(controller);
-        deleteInvoiceButton.setActionCommand("Delete");
+        deleteInvoiceButton.setActionCommand("Delete Invoice");
         deleteInvoiceButton.addActionListener(controller);
         saveFile.setActionCommand("Save File");
         saveFile.addActionListener(controller);
-        openFile.setActionCommand("Open File");
-        openFile.addActionListener(controller);
+        loadFile.setActionCommand("Load File");
+        loadFile.addActionListener(controller);
     }
 
     /**
@@ -68,7 +72,7 @@ public class SIG_MainFrame extends javax.swing.JFrame {
         invoiceItemsTable = new javax.swing.JTable();
         MenuBar = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
-        openFile = new javax.swing.JMenuItem();
+        loadFile = new javax.swing.JMenuItem();
         saveFile = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -147,13 +151,13 @@ public class SIG_MainFrame extends javax.swing.JFrame {
 
         FileMenu.setText("File");
 
-        openFile.setText("Load File");
-        openFile.addActionListener(new java.awt.event.ActionListener() {
+        loadFile.setText("Load File");
+        loadFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openFileActionPerformed(evt);
+                loadFileActionPerformed(evt);
             }
         });
-        FileMenu.add(openFile);
+        FileMenu.add(loadFile);
 
         saveFile.setText("Save File");
         saveFile.addActionListener(new java.awt.event.ActionListener() {
@@ -201,7 +205,7 @@ public class SIG_MainFrame extends javax.swing.JFrame {
                         .addComponent(newLineButton)
                         .addGap(76, 76, 76)
                         .addComponent(deleteLineButton)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(72, 72, 72))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,9 +245,9 @@ public class SIG_MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
+    private void loadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFileActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_openFileActionPerformed
+    }//GEN-LAST:event_loadFileActionPerformed
 
     private void deleteInvoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteInvoiceButtonActionPerformed
         // TODO add your handling code here:
@@ -295,169 +299,13 @@ public class SIG_MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SIG_MainFrame().setVisible(true);
+                SIG_MainFrame obj = new SIG_MainFrame();
+                obj.controller.LoadFile("InvoiceHeader.csv", "InvoiceLine.csv");
+                obj.setVisible(true);
             }
         });
     }
 
-    public JMenu getFileMenu() {
-        return FileMenu;
-    }
-
-    public void setFileMenu(JMenu FileMenu) {
-        this.FileMenu = FileMenu;
-    }
-
-    public JLabel getInvoiceTotalLabel() {
-        return InvoiceTotalLabel;
-    }
-
-    public void setInvoiceTotalLabel(JLabel InvoiceTotalLabel) {
-        this.InvoiceTotalLabel = InvoiceTotalLabel;
-    }
-
-    public JLabel getInvoiceTotalLabelVal() {
-        return InvoiceTotalLabelVal;
-    }
-
-    public void setInvoiceTotalLabelVal(JLabel InvoiceTotalLabelVal) {
-        this.InvoiceTotalLabelVal = InvoiceTotalLabelVal;
-    }
-
-
-    public void setMenuBar(JMenuBar MenuBar) {
-        this.MenuBar = MenuBar;
-    }
-
-    public JButton getCancelButton() {
-        return deleteLineButton;
-    }
-
-    public void setCancelButton(JButton cancelButton) {
-        this.deleteLineButton = cancelButton;
-    }
-
-    public JButton getCreateNewInvoiceButton() {
-        return createNewInvoiceButton;
-    }
-
-    public void setCreateNewInvoiceButton(JButton createNewInvoiceButton) {
-        this.createNewInvoiceButton = createNewInvoiceButton;
-    }
-
-    public JLabel getCustomerNameLabel() {
-        return customerNameLabel;
-    }
-
-    public void setCustomerNameLabel(JLabel customerNameLabel) {
-        this.customerNameLabel = customerNameLabel;
-    }
-
-    public JLabel getCustomerNameLabelVal() {
-        return CustomerNameLabelVal;
-    }
-
-    public void setCustomerNameLabelVal(JLabel CustomerNameLabelVal) {
-        this.CustomerNameLabelVal = CustomerNameLabelVal;
-    }
-
-    public JLabel getDateLabelVal() {
-        return DateLabelVal;
-    }
-
-    public void setDateLabelVal(JLabel DateLabelVal) {
-        this.DateLabelVal = DateLabelVal;
-    }
-
-    
-   
-    public JButton getDeleteInvoiceButton() {
-        return deleteInvoiceButton;
-    }
-
-    public void setDeleteInvoiceButton(JButton deleteInvoiceButton) {
-        this.deleteInvoiceButton = deleteInvoiceButton;
-    }
-
-    public JLabel getInvoiceDateLabel() {
-        return invoiceDateLabel;
-    }
-
-    public void setInvoiceDateLabel(JLabel invoiceDateLabel) {
-        this.invoiceDateLabel = invoiceDateLabel;
-    }
-
-    public JTable getInvoiceItemsTable() {
-        return invoiceItemsTable;
-    }
-
-    public void setInvoiceItemsTable(JTable invoiceItemsTable) {
-        this.invoiceItemsTable = invoiceItemsTable;
-    }
-
-    public JLabel getInvoiceNumlLabel() {
-        return invoiceNumlLabel;
-    }
-
-    public void setInvoiceNumlLabel(JLabel invoiceNumlLabel) {
-        this.invoiceNumlLabel = invoiceNumlLabel;
-    }
-
-    public JLabel getInvoiceNumlLabelVal() {
-        return invoiceNumlLabelVal;
-    }
-
-    public void setInvoiceNumlLabelVal(JLabel invoiceNumlLabelVal) {
-        this.invoiceNumlLabelVal = invoiceNumlLabelVal;
-    }
-
-    public JTable getInvoicesTable() {
-        return invoicesTable;
-    }
-
-    public void setInvoicesTable(JTable invoicesTable) {
-        this.invoicesTable = invoicesTable;
-    }
-
-    public JScrollPane getjScrollPane1() {
-        return jScrollPane1;
-    }
-
-    public void setjScrollPane1(JScrollPane jScrollPane1) {
-        this.jScrollPane1 = jScrollPane1;
-    }
-
-    public JScrollPane getjScrollPane2() {
-        return jScrollPane2;
-    }
-
-    public void setjScrollPane2(JScrollPane jScrollPane2) {
-        this.jScrollPane2 = jScrollPane2;
-    }
-
-    public JMenuItem getOpenFile() {
-        return openFile;
-    }
-
-    public void setOpenFile(JMenuItem openFile) {
-        this.openFile = openFile;
-    }
-
-    public JButton getSaveButton() {
-        return newLineButton;
-    }
-
-    public void setSaveButton(JButton saveButton) {
-        this.newLineButton = saveButton;
-    }
-
-    public JMenuItem getSaveFile() {
-        return saveFile;
-    }
-
-    public void setSaveFile(JMenuItem saveFile) {
-        this.saveFile = saveFile;
-    }
     
     
 
@@ -479,8 +327,60 @@ public class SIG_MainFrame extends javax.swing.JFrame {
     private javax.swing.JTable invoicesTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenuItem loadFile;
     private javax.swing.JButton newLineButton;
-    private javax.swing.JMenuItem openFile;
     private javax.swing.JMenuItem saveFile;
     // End of variables declaration//GEN-END:variables
+    private Controller controller = new Controller(this);
+    private ArrayList<InvoiceHeader> invoicesHeader = new ArrayList<>();
+    public static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private InvoiceHeaderTableModel headerTableModel;
+
+
+
+    public JLabel getCustomerNameLabelVal() {
+        return CustomerNameLabelVal;
+    }
+
+    public JLabel getDateLabelVal() {
+        return DateLabelVal;
+    }
+
+    public JLabel getInvoiceTotalLabelVal() {
+        return InvoiceTotalLabelVal;
+    }
+
+    public JTable getInvoiceItemsTable() {
+        return invoiceItemsTable;
+    }
+
+    public JLabel getInvoiceNumlLabelVal() {
+        return invoiceNumlLabelVal;
+    }
+
+    public JTable getInvoicesTable() {
+        return invoicesTable;
+    }
+
+    public ArrayList<InvoiceHeader> getInvoicesHeader() {
+        return invoicesHeader;
+    }
+    
+    public InvoiceHeader getInvoiceHeader(int num) {
+        for (InvoiceHeader inv : invoicesHeader) {
+            if (inv.getInvoiceNum()== num) {
+                return inv;
+            }
+        }
+        return null;
+    }
+
+    public InvoiceHeaderTableModel getHeaderTableModel() {
+        return headerTableModel;
+    }
+
+    public void setHeaderTableModel(InvoiceHeaderTableModel headerTableModel) {
+        this.headerTableModel = headerTableModel;
+        invoicesTable.setModel(headerTableModel);
+    }
 }

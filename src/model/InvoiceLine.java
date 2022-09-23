@@ -14,13 +14,17 @@ public class InvoiceLine {
     private double itemPrice;
     private int itemNum;
     private int count;
+    private InvoiceHeader inv;
 
-    public InvoiceLine(String itemName, double itemPrice, int itemNum, int count) {
+    public InvoiceLine(String itemName, double itemPrice, int count, InvoiceHeader inv) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
-        this.itemNum = itemNum;
         this.count = count;
+        this.inv = inv;
     }
+
+
+    
     
     //caculate each item total price
     public double itemTotal(){

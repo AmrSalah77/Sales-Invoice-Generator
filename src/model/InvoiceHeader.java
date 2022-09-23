@@ -16,7 +16,7 @@ public class InvoiceHeader {
      private int invoiceNum;
      private Date invoiceDate;
      private String customerName;
-     private ArrayList<InvoiceLine> lines;
+     private ArrayList<InvoiceLine> items;
      
 
     public InvoiceHeader(int invoiceNum, Date invoiceDate, String customerName) {
@@ -29,8 +29,8 @@ public class InvoiceHeader {
         double total = 0.0;
         
         //for each line in invoice add its total to invoice total price
-        for (int i = 0; i < lines.size() ; i++) {
-            InvoiceLine line = lines.get(i);
+        for (int i = 0; i < getItems().size() ; i++) {
+            InvoiceLine line = getItems().get(i);
             total+= line.itemTotal();
         }
         
@@ -59,6 +59,13 @@ public class InvoiceHeader {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public ArrayList<InvoiceLine> getItems() {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        return items;
     }
 
     @Override

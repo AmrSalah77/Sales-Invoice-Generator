@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.Controller;
+
 /**
  *
  * @author Amr
@@ -17,6 +19,11 @@ public class NewInvoiceLineDialog extends javax.swing.JDialog {
     public NewInvoiceLineDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Controller controller = new Controller(this);
+        itemLinesCancel.setActionCommand("Cancel Line");
+        itemLinesCancel.addActionListener(controller);
+        itemLinesSave.setActionCommand("Save Line");
+        itemLinesSave.addActionListener(controller);
     }
 
     /**

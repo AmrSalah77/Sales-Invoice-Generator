@@ -22,7 +22,7 @@ public class NewInvoiceHeaderDialog extends javax.swing.JDialog {
     public NewInvoiceHeaderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        Controller controller = new Controller();
+        Controller controller = new Controller(this);
         nameDateCancel.setActionCommand("Cancel Header");
         nameDateCancel.addActionListener(controller);
         nameDateSave.setActionCommand("Save Header");
