@@ -395,6 +395,8 @@ public class SIG_MainFrame extends javax.swing.JFrame {
         this.lineTableModel = lineTableModel;
         invoiceItemsTable.setModel(lineTableModel);
     }
-    
-    
+
+    public Controller getController() {
+        return controller;
+    }
 }

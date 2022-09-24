@@ -7,8 +7,10 @@
             <file>file:/D:/Sales-Invoice-Generator/src/model/InvoiceLine.java</file>
             <file>file:/D:/Sales-Invoice-Generator/src/view/SIG_MainFrame.java</file>
             <file>file:/D:/Sales-Invoice-Generator/src/view/NewInvoiceLineDialog.java</file>
+            <file>file:/D:/Sales-Invoice-Generator/src/model/InvoiceHeaderTableModel.java</file>
             <file>file:/D:/Sales-Invoice-Generator/src/controller/Controller.java</file>
             <file>file:/D:/Sales-Invoice-Generator/src/view/NewInvoiceHeaderDialog.java</file>
+            <file>file:/D:/Sales-Invoice-Generator/src/model/InvoiceLineTableModel.java</file>
         </group>
     </open-files>
 </project-private>

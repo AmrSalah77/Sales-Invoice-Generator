@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,14 +43,6 @@ public class Controller implements ActionListener, ListSelectionListener{
         this.mainFrame = mainFrame;
     }
     
-    public Controller(NewInvoiceHeaderDialog headerFrame) {
-        this.headerFrame = headerFrame;
-    }
-    
-    public Controller(NewInvoiceLineDialog lineFrame) {
-        this.lineFrame = lineFrame;
-    }
-    
     @Override
     public void valueChanged(ListSelectionEvent lse) {
         int rowIndex = mainFrame.getInvoicesTable().getSelectedRow();
@@ -71,6 +64,30 @@ public class Controller implements ActionListener, ListSelectionListener{
                 break;
             case "Save File":
                 SaveFile();
+                break;
+            case "Create Invoice":
+                createInvoice();
+                break;
+            case "Delete Invoice":
+                deleteInvoice();
+                break;
+            case "New item":
+                newItem();
+                break;
+            case "Delete Item ":
+                deleteItem();
+                break;
+            case "Save Header":
+                saveHeader();
+                break;
+            case "Cancel Header":
+                cancelHeader();
+                break;
+            case "Save Item":
+                saveItem();
+                break;
+            case "Cancel Item":
+                cancelItem();
                 break;
         }
     }
@@ -152,14 +169,18 @@ public class Controller implements ActionListener, ListSelectionListener{
                         items += line.toString() + "\n";
                         }
                     }
+                
                 result = fileChooser.showSaveDialog(this.mainFrame);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File invoiceLineFile = fileChooser.getSelectedFile();
+                //add .csv extension    
                 if(!invoiceLineFile.getName().endsWith(".csv"))
                     invoiceLineFile = new File(invoiceLineFile.toString() + ".csv");
                 FileWriter itemsWriter = new FileWriter(invoiceLineFile);
+                //write headers to file
                 headerWriter.write(headers);
                 headerWriter.close();
+                //write items to file
                 itemsWriter.write(items);
                 itemsWriter.close();
                     }
@@ -168,4 +189,53 @@ public class Controller implements ActionListener, ListSelectionListener{
                 JOptionPane.showMessageDialog(this.mainFrame, "File cannot be opened", "File not found", JOptionPane.ERROR_MESSAGE);
             }
         }
+
+    private void createInvoice() {
+        headerFrame = new NewInvoiceHeaderDialog(mainFrame, true);  
+        headerFrame.setVisible(true);
+    }
+
+    private void deleteInvoice() {
+        
+    }
+
+    private void newItem() {
+        lineFrame = new NewInvoiceLineDialog(mainFrame, true);
+        lineFrame.setVisible(true);
+    }
+
+    private void deleteItem() {
+        
+    }
+
+    private void saveHeader() {
+        String customerName = headerFrame.getCustomerNameVal().getText();
+        int headerNum = mainFrame.getHeaderTableModel().getRowCount() + 1;
+        try {
+            Date date = mainFrame.dateFormat.parse(headerFrame.getDateVal().getText());
+            InvoiceHeader header = new InvoiceHeader(headerNum, date, customerName);
+            mainFrame.getInvoicesHeader().add(header);
+            mainFrame.getHeaderTableModel().fireTableDataChanged();
+            
+            headerFrame.setVisible(false);
+            headerFrame.dispose();
+            headerFrame = null ; 
+        } catch (ParseException exp) {
+            JOptionPane.showMessageDialog(mainFrame, "Date should be 'dd-mm-yyyy'", "Parse Error", JOptionPane.ERROR_MESSAGE);
+            }  
+    }
+    
+    private void cancelHeader() {
+        headerFrame.setVisible(false);
+        headerFrame.dispose();
+        headerFrame = null ; 
+    }
+
+    private void saveItem() {
+        
+    }
+
+    private void cancelItem() {
+        
+    }
 }
