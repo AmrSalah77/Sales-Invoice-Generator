@@ -74,7 +74,7 @@ public class Controller implements ActionListener, ListSelectionListener{
             case "New item":
                 newItem();
                 break;
-            case "Delete Item ":
+            case "Delete Item":
                 deleteItem();
                 break;
             case "Save Header":
@@ -195,7 +195,12 @@ public class Controller implements ActionListener, ListSelectionListener{
     }
 
     private void deleteInvoice() {
-        
+        int row = mainFrame.getInvoicesTable().getSelectedRow();
+            if (row != -1 ){
+                mainFrame.getInvoicesHeader().remove(row);
+                mainFrame.getHeaderTableModel().fireTableDataChanged();
+                mainFrame.getInvoicesTable().selectAll();
+            }
     }
 
     private void newItem() {
@@ -206,7 +211,17 @@ public class Controller implements ActionListener, ListSelectionListener{
     }
 
     private void deleteItem() {
+        int headerRow = mainFrame.getInvoicesTable().getSelectedRow();
+        int itemRow = mainFrame.getInvoiceItemsTable().getSelectedRow();
         
+        if (headerRow != -1 && itemRow != -1 ){
+                InvoiceHeader invoice = mainFrame.getInvoicesHeader().get(headerRow);
+                invoice.getItems().remove(itemRow);
+                mainFrame.getLineTableModel().fireTableDataChanged();
+                mainFrame.getHeaderTableModel().fireTableDataChanged();
+            }
+        
+        mainFrame.getInvoicesTable().addRowSelectionInterval(headerRow, headerRow);
     }
 
     private void saveHeader() {
