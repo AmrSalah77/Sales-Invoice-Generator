@@ -70,7 +70,7 @@ public class InvoiceHeader {
 
     @Override
     public String toString() {
-        return "InvoiceHeader{" + "invoiceNum=" + invoiceNum + ", invoiceDate=" + invoiceDate + ", customerName=" + customerName + '}';
+        return  invoiceNum + "," + invoiceDate + "," + customerName ;
     }
      
      

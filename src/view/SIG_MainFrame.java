@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import model.InvoiceHeader;
 import model.InvoiceHeaderTableModel;
+import model.InvoiceLineTableModel;
 
 /**
  *
@@ -60,6 +61,7 @@ public class SIG_MainFrame extends javax.swing.JFrame {
         deleteLineButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         invoicesTable = new javax.swing.JTable();
+        invoicesTable.getSelectionModel().addListSelectionListener(controller);
         invoiceNumlLabel = new javax.swing.JLabel();
         invoiceNumlLabelVal = new javax.swing.JLabel();
         invoiceDateLabel = new javax.swing.JLabel();
@@ -335,6 +337,7 @@ public class SIG_MainFrame extends javax.swing.JFrame {
     private ArrayList<InvoiceHeader> invoicesHeader = new ArrayList<>();
     public static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     private InvoiceHeaderTableModel headerTableModel;
+    private InvoiceLineTableModel lineTableModel;
 
 
 
@@ -366,10 +369,10 @@ public class SIG_MainFrame extends javax.swing.JFrame {
         return invoicesHeader;
     }
     
-    public InvoiceHeader getInvoiceHeader(int num) {
-        for (InvoiceHeader inv : invoicesHeader) {
-            if (inv.getInvoiceNum()== num) {
-                return inv;
+    public InvoiceHeader getInvoiceHeader(int number) {
+        for (InvoiceHeader header : invoicesHeader) {
+            if (header.getInvoiceNum()== number) {
+                return header;
             }
         }
         return null;
@@ -383,4 +386,15 @@ public class SIG_MainFrame extends javax.swing.JFrame {
         this.headerTableModel = headerTableModel;
         invoicesTable.setModel(headerTableModel);
     }
+
+    public InvoiceLineTableModel getLineTableModel() {
+        return lineTableModel;
+    }
+
+    public void setLineTableModel(InvoiceLineTableModel lineTableModel) {
+        this.lineTableModel = lineTableModel;
+        invoiceItemsTable.setModel(lineTableModel);
+    }
+    
+    
 }

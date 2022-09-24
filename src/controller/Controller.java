@@ -8,15 +8,22 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import model.InvoiceHeader;
 import model.InvoiceHeaderTableModel;
 import model.InvoiceLine;
+import model.InvoiceLineTableModel;
 import view.NewInvoiceHeaderDialog;
 import view.NewInvoiceLineDialog;
 import view.SIG_MainFrame;
@@ -25,7 +32,7 @@ import view.SIG_MainFrame;
  *
  * @author Amr
  */
-public class Controller implements ActionListener{
+public class Controller implements ActionListener, ListSelectionListener{
 
     private SIG_MainFrame mainFrame;
     private NewInvoiceHeaderDialog headerFrame;
@@ -44,10 +51,25 @@ public class Controller implements ActionListener{
     }
     
     @Override
+    public void valueChanged(ListSelectionEvent lse) {
+        int rowIndex = mainFrame.getInvoicesTable().getSelectedRow();
+        InvoiceHeader header = mainFrame.getInvoicesHeader().get(rowIndex);
+        mainFrame.setLineTableModel(new InvoiceLineTableModel(header.getItems()));
+        mainFrame.getInvoiceNumlLabelVal().setText(""+header.getInvoiceNum());
+        mainFrame.getDateLabelVal().setText(mainFrame.dateFormat.format(header.getInvoiceDate()));
+        mainFrame.getCustomerNameLabelVal().setText(header.getCustomerName());
+        mainFrame.getInvoiceTotalLabelVal().setText(""+header.getInvoiceTotal());
+        
+    }
+    
+    @Override
     public void actionPerformed(ActionEvent ae) {
         switch(ae.getActionCommand()){
             case "Load File":
                 LoadFile(null,null);
+                break;
+            case "Save File":
+                SaveFile();
                 break;
         }
     }
@@ -82,6 +104,7 @@ public class Controller implements ActionListener{
                 List<String> invoiceLines = Files.lines(Paths.get(invoiceLineFile.getAbsolutePath())).collect(Collectors.toList());
                 mainFrame.getInvoicesHeader().clear();
                 for (String headerLine : invoicesHeaders) {
+                    //split lines to num, date, Name
                     String[] columns = headerLine.split(",");
                     int invoiceNum = Integer.parseInt(columns[0]);
                     String dateString = columns[1];
@@ -91,6 +114,7 @@ public class Controller implements ActionListener{
                     mainFrame.getInvoicesHeader().add(header);
                 }
                 for (String lineLine : invoiceLines) {
+                    //split lines to num, Name, price, count
                     String[] columns = lineLine.split(",");
                     int itemNum = Integer.parseInt(columns[0]);
                     String itemName = columns[1];
@@ -106,5 +130,8 @@ public class Controller implements ActionListener{
             }
         }
     }
-    
+
+    private void SaveFile() {
+           
+        }
 }
