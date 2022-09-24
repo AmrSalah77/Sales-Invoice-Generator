@@ -125,9 +125,8 @@ public class Controller implements ActionListener, ListSelectionListener{
                     //split lines to num, date, Name
                     String[] columns = headerLine.split(",");
                     int invoiceNum = Integer.parseInt(columns[0]);
-                    String dateString = columns[1];
+                    Date date = mainFrame.dateFormat.parse(columns[1]);
                     String customerName = columns[2];
-                    Date date = mainFrame.dateFormat.parse(dateString);
                     InvoiceHeader header = new InvoiceHeader(invoiceNum, date, customerName);
                     mainFrame.getInvoicesHeader().add(header);
                 }
@@ -200,8 +199,10 @@ public class Controller implements ActionListener, ListSelectionListener{
     }
 
     private void newItem() {
+        int row = mainFrame.getInvoicesTable().getSelectedRow();
+        if(row != -1){
         lineFrame = new NewInvoiceLineDialog(mainFrame, true);
-        lineFrame.setVisible(true);
+        lineFrame.setVisible(true);}
     }
 
     private void deleteItem() {
@@ -220,7 +221,7 @@ public class Controller implements ActionListener, ListSelectionListener{
             headerFrame.setVisible(false);
             headerFrame.dispose();
             headerFrame = null ; 
-        } catch (ParseException exp) {
+        } catch (ParseException e) {
             JOptionPane.showMessageDialog(mainFrame, "Date should be 'dd-mm-yyyy'", "Parse Error", JOptionPane.ERROR_MESSAGE);
             }  
     }
@@ -232,10 +233,28 @@ public class Controller implements ActionListener, ListSelectionListener{
     }
 
     private void saveItem() {
-        
+        int row = mainFrame.getInvoicesTable().getSelectedRow();
+        if(row != -1){
+            InvoiceHeader header = mainFrame.getInvoicesHeader().get(row);
+            String itemName = lineFrame.getItemNameVal().getText();
+            double price = Double.parseDouble(lineFrame.getItemPriceVal().getText());
+            int count = Integer.parseInt(lineFrame.getItemCountVal().getText());
+            InvoiceLine line = new InvoiceLine(itemName, price, count, header);
+            header.getItems().add(line);
+            mainFrame.getLineTableModel().fireTableDataChanged();
+            mainFrame.getHeaderTableModel().fireTableDataChanged();
+        }  
+
+        lineFrame.setVisible(false);
+        lineFrame.dispose();
+        lineFrame = null ; 
+        mainFrame.getInvoicesTable().addRowSelectionInterval(row, row);
     }
+    
 
     private void cancelItem() {
-        
+        lineFrame.setVisible(false);
+        lineFrame.dispose();
+        lineFrame = null ; 
     }
 }
