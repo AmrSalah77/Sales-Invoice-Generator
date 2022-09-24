@@ -53,13 +53,14 @@ public class Controller implements ActionListener, ListSelectionListener{
     @Override
     public void valueChanged(ListSelectionEvent lse) {
         int rowIndex = mainFrame.getInvoicesTable().getSelectedRow();
+        if (rowIndex != -1) {
         InvoiceHeader header = mainFrame.getInvoicesHeader().get(rowIndex);
         mainFrame.setLineTableModel(new InvoiceLineTableModel(header.getItems()));
         mainFrame.getInvoiceNumlLabelVal().setText(""+header.getInvoiceNum());
         mainFrame.getDateLabelVal().setText(mainFrame.dateFormat.format(header.getInvoiceDate()));
         mainFrame.getCustomerNameLabelVal().setText(header.getCustomerName());
         mainFrame.getInvoiceTotalLabelVal().setText(""+header.getInvoiceTotal());
-        
+         }
     }
     
     @Override
@@ -132,6 +133,39 @@ public class Controller implements ActionListener, ListSelectionListener{
     }
 
     private void SaveFile() {
-           
+            try {
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showSaveDialog(mainFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File invoiceHeaderFile = fileChooser.getSelectedFile();
+                //add .csv extension    
+                if(!invoiceHeaderFile.getName().endsWith(".csv"))
+                    invoiceHeaderFile = new File(invoiceHeaderFile.toString() + ".csv");
+                FileWriter headerWriter = new FileWriter(invoiceHeaderFile);
+                ArrayList<InvoiceHeader> invoicesHeaders = mainFrame.getInvoicesHeader();
+                String headers = "";
+                String items = "";
+
+                for (InvoiceHeader header : invoicesHeaders) {
+                    headers += header.toString() + "\n";
+                    for (InvoiceLine line : header.getItems()) {
+                        items += line.toString() + "\n";
+                        }
+                    }
+                result = fileChooser.showSaveDialog(this.mainFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File invoiceLineFile = fileChooser.getSelectedFile();
+                if(!invoiceLineFile.getName().endsWith(".csv"))
+                    invoiceLineFile = new File(invoiceLineFile.toString() + ".csv");
+                FileWriter itemsWriter = new FileWriter(invoiceLineFile);
+                headerWriter.write(headers);
+                headerWriter.close();
+                itemsWriter.write(items);
+                itemsWriter.close();
+                    }
+                }
+            } catch (IOException e1) {
+                JOptionPane.showMessageDialog(this.mainFrame, "File cannot be opened", "File not found", JOptionPane.ERROR_MESSAGE);
+            }
         }
 }

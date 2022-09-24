@@ -5,8 +5,10 @@
  */
 package model;
 
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.Date;
+import view.SIG_MainFrame;
 
 /**
  *
@@ -70,7 +72,7 @@ public class InvoiceHeader {
 
     @Override
     public String toString() {
-        return  invoiceNum + "," + invoiceDate + "," + customerName ;
+        return  invoiceNum + "," + SIG_MainFrame.dateFormat.format(invoiceDate) + "," + customerName ;
     }
      
      
