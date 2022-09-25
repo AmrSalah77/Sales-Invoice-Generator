@@ -71,17 +71,17 @@ public class Controller implements ActionListener, ListSelectionListener{
             case "Delete Invoice":
                 deleteInvoice();
                 break;
-            case "New item":
-                newItem();
-                break;
-            case "Delete Item":
-                deleteItem();
-                break;
             case "Save Header":
                 saveHeader();
                 break;
             case "Cancel Header":
                 cancelHeader();
+                break;
+            case "New item":
+                newItem();
+                break;
+            case "Delete Item":
+                deleteItem();
                 break;
             case "Save Item":
                 saveItem();
@@ -142,9 +142,14 @@ public class Controller implements ActionListener, ListSelectionListener{
                     header.getItems().add(line);
                 }
                 mainFrame.setHeaderTableModel(new InvoiceHeaderTableModel(mainFrame.getInvoicesHeader()));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(mainFrame, "File name not found", "File not found", JOptionPane.ERROR_MESSAGE);
+            } catch (ParseException e1) {
+                JOptionPane.showMessageDialog(mainFrame, "Incorrect date format. Date should be 'dd-mm-yyyy'", "Date Format", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e2) {
+                JOptionPane.showMessageDialog(mainFrame, "File extension must be .csv", "File Format", JOptionPane.ERROR_MESSAGE);
+
+        }
         }
     }
 
@@ -197,10 +202,47 @@ public class Controller implements ActionListener, ListSelectionListener{
     private void deleteInvoice() {
         int row = mainFrame.getInvoicesTable().getSelectedRow();
             if (row != -1 ){
+                InvoiceHeader invoice = mainFrame.getInvoicesHeader().get(row);
+                invoice.getItems().clear();
                 mainFrame.getInvoicesHeader().remove(row);
+                mainFrame.getInvoiceNumlLabelVal().setText("-");
+                mainFrame.getDateLabelVal().setText("-");
+                mainFrame.getCustomerNameLabelVal().setText("-");
+                mainFrame.getInvoiceTotalLabelVal().setText("-");
+                mainFrame.getLineTableModel().fireTableDataChanged();
                 mainFrame.getHeaderTableModel().fireTableDataChanged();
-                mainFrame.getInvoicesTable().selectAll();
             }
+            else {
+                JOptionPane.showMessageDialog(mainFrame, "Choose a Header First", "Choose Header", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    
+    private void saveHeader() {
+        String customerName = headerFrame.getCustomerNameVal().getText();
+        int headerNum = mainFrame.getHeaderTableModel().getRowCount() + 1;
+        System.out.println(customerName);
+        if(customerName.equals("")){
+        JOptionPane.showMessageDialog(mainFrame, "name text filed must be filled", "Name Error", JOptionPane.ERROR_MESSAGE);
+        cancelHeader();
+        }
+        try {
+            Date date = mainFrame.dateFormat.parse(headerFrame.getDateVal().getText());
+            InvoiceHeader header = new InvoiceHeader(headerNum, date, customerName);
+            mainFrame.getInvoicesHeader().add(header);
+            mainFrame.getHeaderTableModel().fireTableDataChanged();
+            
+            headerFrame.setVisible(false);
+            headerFrame.dispose();
+            headerFrame = null ; 
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(mainFrame, "Date should be 'dd-mm-yyyy'", "Date Error", JOptionPane.ERROR_MESSAGE);
+            }  
+    }
+    
+    private void cancelHeader() {
+        headerFrame.setVisible(false);
+        headerFrame.dispose();
+        headerFrame = null ; 
     }
 
     private void newItem() {
@@ -220,36 +262,17 @@ public class Controller implements ActionListener, ListSelectionListener{
                 mainFrame.getLineTableModel().fireTableDataChanged();
                 mainFrame.getHeaderTableModel().fireTableDataChanged();
             }
+        else{
+            JOptionPane.showMessageDialog(mainFrame, "Choose a Row First", "Choose Row", JOptionPane.ERROR_MESSAGE);
+        }
         
         mainFrame.getInvoicesTable().addRowSelectionInterval(headerRow, headerRow);
-    }
-
-    private void saveHeader() {
-        String customerName = headerFrame.getCustomerNameVal().getText();
-        int headerNum = mainFrame.getHeaderTableModel().getRowCount() + 1;
-        try {
-            Date date = mainFrame.dateFormat.parse(headerFrame.getDateVal().getText());
-            InvoiceHeader header = new InvoiceHeader(headerNum, date, customerName);
-            mainFrame.getInvoicesHeader().add(header);
-            mainFrame.getHeaderTableModel().fireTableDataChanged();
-            
-            headerFrame.setVisible(false);
-            headerFrame.dispose();
-            headerFrame = null ; 
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(mainFrame, "Date should be 'dd-mm-yyyy'", "Parse Error", JOptionPane.ERROR_MESSAGE);
-            }  
-    }
-    
-    private void cancelHeader() {
-        headerFrame.setVisible(false);
-        headerFrame.dispose();
-        headerFrame = null ; 
     }
 
     private void saveItem() {
         int row = mainFrame.getInvoicesTable().getSelectedRow();
         if(row != -1){
+        try{ 
             InvoiceHeader header = mainFrame.getInvoicesHeader().get(row);
             String itemName = lineFrame.getItemNameVal().getText();
             double price = Double.parseDouble(lineFrame.getItemPriceVal().getText());
@@ -258,14 +281,17 @@ public class Controller implements ActionListener, ListSelectionListener{
             header.getItems().add(line);
             mainFrame.getLineTableModel().fireTableDataChanged();
             mainFrame.getHeaderTableModel().fireTableDataChanged();
-        }  
-
+            if (itemName.equals("")) {
+                JOptionPane.showMessageDialog(mainFrame, "name text filed must be filled", "Name Error", JOptionPane.ERROR_MESSAGE);
+        }  }catch(NumberFormatException exception){
+                JOptionPane.showMessageDialog(mainFrame, "price and count must be a number", "Format Error", JOptionPane.ERROR_MESSAGE);
+        }
         lineFrame.setVisible(false);
         lineFrame.dispose();
         lineFrame = null ; 
         mainFrame.getInvoicesTable().addRowSelectionInterval(row, row);
     }
-    
+}
 
     private void cancelItem() {
         lineFrame.setVisible(false);
